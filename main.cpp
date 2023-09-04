@@ -1,8 +1,8 @@
 #include <stdio.h>
 #include <assert.h>
 
-void print_data(const int* arr);
-const int *data_elem(const int *arr, const int y, const int x);
+void print_data(const int* arr, const size_t height, const size_t width);
+const int *data_elem(const int *arr, const size_t y, const size_t x, const size_t height, const size_t width);
 
 int main(void)
 {
@@ -21,32 +21,35 @@ int main(void)
     print_d_symm(&d_symm);
     free(d_symm.data);
     */
-   int arr[] = {3, 4,
-                1, 2, 3, 4,
+    const size_t height = 3;
+    const size_t width  = 4;
+
+   int arr[] = {1, 2, 3, 4,
                 5, 6, 7, 8,
                 9, 10, 11, 12};
-    print_data(&arr[2]);
+
+    print_data(arr, height, width);
 }
 
-void print_data(const int *arr)
+void print_data(const int *arr, const size_t height, const size_t width)
 {
     assert(arr != NULL);
 
-    int width = arr[-1];
-    int height = arr[-2];
-
-    for(int i = 0; i < height; i++)
+    for(size_t i = 0; i < height; i++)
     {
-        for(int j = 0; j < width; j++)
+        for(size_t j = 0; j < width; j++)
         {
-            printf("%d\t", *data_elem(arr, i, j));
+            printf("%d\t", *data_elem(arr, i, j, height, width));
         }
 
         printf("\n");
     }
 }
 
-const int *data_elem(const int *arr, const int y, const int x)
+const int *data_elem(const int *arr, const size_t y, const size_t x, const size_t height, const size_t width)
 {
-    return arr + y*arr[-1] + x;
+    assert(arr != NULL);
+    assert(x < width && y < height);
+
+    return arr + y*width + x;
 }
