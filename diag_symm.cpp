@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-#include "d_symm.h"
+#include "diag_symm.h"
 
 #include "colors.h"
 
