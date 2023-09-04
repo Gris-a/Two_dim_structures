@@ -1,14 +1,9 @@
 #include <stdio.h>
 #include <assert.h>
 #include <string.h>
+#include <stdlib.h>
 
-const size_t MAX_N_STR = 100;
-const size_t MAX_STR_LEN = 100;
-char buffer[MAX_STR_LEN] = "";
-
-void print_data(const int* arr, const size_t height, const size_t width);
-const int *data_elem(const int *arr, const size_t y, const size_t x, const size_t height, const size_t width);
-void fread_data(FILE *file, char data[][MAX_STR_LEN]);
+void fread_data(FILE *file, char *data, size_t max_str_len, size_t max_n_str);
 
 int main(void)
 {
@@ -28,46 +23,30 @@ int main(void)
     free(d_symm.data);
     */
 
-   char arr[MAX_N_STR][MAX_STR_LEN] = {};
-   fread_data(fopen("input.txt", "r"), arr);
-   for(size_t i = 0; i < MAX_N_STR; i++)
+   size_t str_len_max = 100;
+   size_t str_n_max = 100;
+
+   char *arr = (char *)calloc(str_n_max*(str_len_max + 1), sizeof(char));
+   fread_data(fopen("input.txt", "r"), arr, str_len_max, str_n_max);
+
+   for(size_t i = 0; i < str_n_max; i++)
    {
-        printf("%s", arr[i]);
+        printf("%s", (arr + i * (str_len_max + 1)));
    }
-
-}
-
-void print_data(const int *arr, const size_t height, const size_t width)
-{
-    assert(arr != NULL);
-
-    for(size_t i = 0; i < height; i++)
-    {
-        for(size_t j = 0; j < width; j++)
-        {
-            printf("%d\t", *data_elem(arr, i, j, height, width));
-        }
-
-        printf("\n");
-    }
+    free(arr);
 }
 
 
-void fread_data(FILE *file, char data[][MAX_STR_LEN])
+void fread_data(FILE *file, char *data, size_t max_str_len, size_t max_n_str)
 {
     assert(file != NULL);
     assert(data != NULL);
+    char * buffer = (char *)calloc(max_str_len+1, sizeof(char));
 
-    while(fgets(buffer, MAX_STR_LEN, file) != NULL)
+    while(fgets(buffer, (int)max_str_len, file) != NULL && max_n_str-- > 0)
     {
-        strncpy(*data, buffer, MAX_STR_LEN);
-        data++;
+        strncpy(data, buffer, max_n_str);
+        data += max_str_len+1;
     }
-}
-const int *data_elem(const int *arr, const size_t y, const size_t x, const size_t height, const size_t width)
-{
-    assert(arr != NULL);
-    assert(x < width && y < height);
-
-    return arr + y*width + x;
+    free(buffer);
 }
