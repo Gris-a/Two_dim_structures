@@ -24,11 +24,11 @@ int main(void)
     const size_t height = 3;
     const size_t width  = 4;
 
-   int arr[] = {1, 2, 3, 4,
-                5, 6, 7, 8,
-                9, 10, 11, 12};
+   int arr[][width] = {{1, 2, 3, 4},
+                  {5, 6, 7, 8},
+                  {9, 10, 11, 12}};
 
-    print_data(arr, height, width);
+    print_data((int *)arr, height, width);
 }
 
 void print_data(const int *arr, const size_t height, const size_t width)
