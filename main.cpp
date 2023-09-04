@@ -1,8 +1,14 @@
 #include <stdio.h>
 #include <assert.h>
+#include <string.h>
 
 void print_data(const int* arr, const size_t height, const size_t width);
 const int *data_elem(const int *arr, const size_t y, const size_t x, const size_t height, const size_t width);
+void fread_data(FILE *file, char *data);
+
+const size_t MAX_N_STR = 100;
+const size_t MAX_STR_LEN = 100;
+char buffer[MAX_STR_LEN] = "";
 
 int main(void)
 {
@@ -21,14 +27,14 @@ int main(void)
     print_d_symm(&d_symm);
     free(d_symm.data);
     */
-    const size_t height = 3;
-    const size_t width  = 4;
 
-   int arr[][width] = {{1, 2, 3, 4},
-                  {5, 6, 7, 8},
-                  {9, 10, 11, 12}};
+   char arr[MAX_N_STR][MAX_STR_LEN] = {};
+   fread_data(fopen("input.txt", "r"), (char *)arr);
+   for(size_t i = 0; i < MAX_N_STR; i++)
+   {
+        printf("%s", arr[i]);
+   }
 
-    print_data((int *)arr, height, width);
 }
 
 void print_data(const int *arr, const size_t height, const size_t width)
@@ -46,6 +52,18 @@ void print_data(const int *arr, const size_t height, const size_t width)
     }
 }
 
+
+void fread_data(FILE *file, char *data)
+{
+    assert(file != NULL);
+    assert(data != NULL);
+
+    while(fgets(buffer, MAX_STR_LEN, file) != NULL)
+    {
+        strncpy(data, buffer, MAX_STR_LEN);
+        data += MAX_STR_LEN;
+    }
+}
 const int *data_elem(const int *arr, const size_t y, const size_t x, const size_t height, const size_t width)
 {
     assert(arr != NULL);
