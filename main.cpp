@@ -1,7 +1,8 @@
-#include <stdlib.h>
 #include <stdio.h>
+#include <assert.h>
 
-#include "diag_symm.h"
+void print_data(const int* arr);
+const int *data_elem(const int *arr, const int y, const int x);
 
 int main(void)
 {
@@ -20,5 +21,32 @@ int main(void)
     print_d_symm(&d_symm);
     free(d_symm.data);
     */
+   int arr[] = {3, 4,
+                1, 2, 3, 4,
+                5, 6, 7, 8,
+                9, 10, 11, 12};
+    print_data(&arr[2]);
+}
 
+void print_data(const int *arr)
+{
+    assert(arr != NULL);
+
+    int width = arr[-1];
+    int height = arr[-2];
+
+    for(int i = 0; i < height; i++)
+    {
+        for(int j = 0; j < width; j++)
+        {
+            printf("%d\t", *data_elem(arr, i, j));
+        }
+
+        printf("\n");
+    }
+}
+
+const int *data_elem(const int *arr, const int y, const int x)
+{
+    return arr + y*arr[-1] + x;
 }
