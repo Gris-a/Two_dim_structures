@@ -3,47 +3,45 @@
 #include <string.h>
 #include <stdlib.h>
 
-size_t fread_data(FILE *const file, char *data[], const size_t max_str_len, const size_t n_str);
+size_t fread_data(FILE *const file, char *data);
+char *str_adr(char *const data, const size_t n_str);
+
+const size_t str_len_max = 32;
+const size_t str_n_max   = 3;
 
 int main(void)
 {
-    size_t str_len_max = 0;
-    size_t str_n       = 0;
 
     FILE *file = fopen("input.txt", "r");
 
-    fscanf(file, "%zu, %zu\n", &str_n, &str_len_max);
-    str_len_max += 2;    //"...\n\0"
+    char *arr = (char *)calloc(str_n_max * str_len_max, sizeof(char));
 
-    char **arr = (char **)calloc(str_n, sizeof(char *));
-
-    str_n = fread_data(file, arr, str_len_max, str_n);
+    size_t number_of_str = fread_data(file, arr);
     fclose(file);
 
-    for(size_t i = 0; i < str_n; i++)
+    for(size_t i = 0; i < number_of_str; i++)
     {
-        printf("%s", arr[i]);
+        printf("%s", str_adr(arr, i));
     }
 
-    for(size_t i = 0; i < str_n; i++)
-    {
-        free(arr[i]);
-    }
     free(arr);
 }
 
-size_t fread_data(FILE *const file, char *data[], const size_t max_str_len, size_t n_str)
+size_t fread_data(FILE *const file, char *data)
 {
     assert(file != NULL);
     assert(data != NULL);
 
-    char *buffer = NULL;
-
-    for(size_t i = 0; i < n_str; i++)
+    char *buffer = (char *)calloc(str_len_max, sizeof(char));
+    if(buffer == NULL)
     {
-        buffer = (char *)calloc(max_str_len, sizeof(char));
+        printf("No memory?\n");
+        return 0;
+    }
 
-        if(buffer == NULL || fgets(buffer, (int)max_str_len, file) == NULL)
+    for(size_t i = 0; i < str_n_max; i++)
+    {
+        if(fgets(buffer, (int)str_len_max, file) == NULL)
         {
             free(buffer);
             printf("error\n");
@@ -51,8 +49,17 @@ size_t fread_data(FILE *const file, char *data[], const size_t max_str_len, size
             return i;
         }
 
-        *(data++) = buffer;
+        strcpy(data, buffer);
+        data += str_len_max;
     }
+    free(buffer);
 
-    return n_str;
+    return str_n_max;
+}
+
+char *str_adr(char *const data, const size_t n_str)
+{
+    assert(data != NULL);
+
+    return data + n_str * str_len_max;
 }
