@@ -43,7 +43,7 @@ size_t fread_data(FILE *const file, char *data[], const size_t max_str_len, size
     {
         buffer = (char *)calloc(max_str_len, sizeof(char));
 
-        if(fgets(buffer, (int)max_str_len, file) == NULL)
+        if(buffer == NULL || fgets(buffer, (int)max_str_len, file) == NULL)
         {
             free(buffer);
             printf("error\n");
