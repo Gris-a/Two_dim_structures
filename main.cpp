@@ -3,50 +3,56 @@
 #include <string.h>
 #include <stdlib.h>
 
-void fread_data(FILE *file, char *data, size_t max_str_len, size_t max_n_str);
+size_t fread_data(FILE *const file, char *data[], const size_t max_str_len, const size_t n_str);
 
 int main(void)
 {
-    /**
-    struct Matrix matrix = {2, 2, NULL};
-    matrix.matrix = make_matrix(matrix.height, matrix.width);
-    fget_matrix (&matrix, file);
-    print_matrix(&matrix);
+    size_t str_len_max = 0;
+    size_t str_n       = 0;
 
-    free(matrix.matrix);
-    */
-   /**
-    struct D_symm d_symm = {3, NULL};
-    d_symm.data = make_d_symm(d_symm.size);
-    fget_d_symm(&d_symm, fopen("input.txt", "r"));
-    print_d_symm(&d_symm);
-    free(d_symm.data);
-    */
+    FILE *file = fopen("input.txt", "r");
 
-   size_t str_len_max = 100;
-   size_t str_n_max = 100;
+    fscanf(file, "%zu, %zu\n", &str_n, &str_len_max);
+    str_len_max += 2;    //"...\n\0"
 
-   char *arr = (char *)calloc(str_n_max*(str_len_max + 1), sizeof(char));
-   fread_data(fopen("input.txt", "r"), arr, str_len_max, str_n_max);
+    char **arr = (char **)calloc(str_n, sizeof(char *));
 
-   for(size_t i = 0; i < str_n_max; i++)
-   {
-        printf("%s", (arr + i * (str_len_max + 1)));
-   }
+    str_n = fread_data(file, arr, str_len_max, str_n);
+    fclose(file);
+
+    for(size_t i = 0; i < str_n; i++)
+    {
+        printf("%s", arr[i]);
+    }
+
+    for(size_t i = 0; i < str_n; i++)
+    {
+        free(arr[i]);
+    }
     free(arr);
 }
 
-
-void fread_data(FILE *file, char *data, size_t max_str_len, size_t max_n_str)
+size_t fread_data(FILE *const file, char *data[], const size_t max_str_len, size_t n_str)
 {
     assert(file != NULL);
     assert(data != NULL);
-    char * buffer = (char *)calloc(max_str_len+1, sizeof(char));
 
-    while(fgets(buffer, (int)max_str_len, file) != NULL && max_n_str-- > 0)
+    char *buffer = NULL;
+
+    for(size_t i = 0; i < n_str; i++)
     {
-        strncpy(data, buffer, max_n_str);
-        data += max_str_len+1;
+        buffer = (char *)calloc(max_str_len, sizeof(char));
+
+        if(fgets(buffer, (int)max_str_len, file) == NULL)
+        {
+            free(buffer);
+            printf("error\n");
+
+            return i;
+        }
+
+        *(data++) = buffer;
     }
-    free(buffer);
+
+    return n_str;
 }
