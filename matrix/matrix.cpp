@@ -4,7 +4,9 @@
 
 #include "matrix.h"
 
-#include "colors.h"
+#include "../colors.h"
+
+//TODO return actual size of matrix
 
 int *matrix_elem(struct Matrix *matrix, const size_t x, const size_t y)
 {
@@ -35,7 +37,12 @@ void fget_matrix(struct Matrix *matrix, FILE *file)
 {
     assert(matrix         != NULL);
     assert(matrix->matrix != NULL);
-    assert(file           != NULL);
+    if(file == NULL)
+    {
+        printf(color_red("can not open file.\n"));
+
+        return;
+    }
 
     for(size_t i = 0; i < matrix->height; i++)
     {

@@ -4,9 +4,9 @@
 
 #include "diag_symm.h"
 
-#include "colors.h"
+#include "../colors.h"
 
-int *d_symm_elem(struct D_symm *d_symm, const size_t x, const size_t y)//TODO segfault check
+int *d_symm_elem(struct D_symm *d_symm, const size_t x, const size_t y)
 {
     assert(d_symm       != NULL);
     assert(d_symm->data != NULL);
@@ -37,15 +37,18 @@ void print_d_symm(struct D_symm *d_symm)
     }
 }
 
-//TODO undef macros
-//TODO rename file
 //TODO setter func/getter func
-
+//TODO return actual size of matrix and optimize fget_d_symm
 void fget_d_symm(struct D_symm *d_symm, FILE *file)
 {
     assert(d_symm       != NULL);
     assert(d_symm->data != NULL);
-    assert(file         != NULL);
+    if(file == NULL)
+    {
+        printf(color_red("can not open file.\n"));
+
+        return;
+    }
 
     for(size_t y = 0; y < d_symm->size; y++)
     {
