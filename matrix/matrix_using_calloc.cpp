@@ -9,7 +9,7 @@
 void print_data(const int* arr, const size_t height, const size_t width);
 size_t fread_data(FILE *file, int *arr, const size_t height, const size_t width);
 
-const int *data_elem(const int *arr, const size_t height, const size_t width, const size_t y, const size_t x);
+int *data_elem(int *arr, const size_t height, const size_t width, const size_t y, const size_t x);
 
 int main(void)
 {
@@ -19,7 +19,7 @@ int main(void)
     FILE *file = fopen("input.txt", "r");
     if(file == NULL)
     {
-        printf(color_red("can not open file.\n"));
+        printf(color_red("Can not open file.\n"));
 
         return EXIT_FAILURE;
     }
@@ -29,7 +29,7 @@ int main(void)
     int *arr = (int *)calloc(height * width, sizeof(int));
     if(arr == NULL)
     {
-        printf(color_red("No memory?\n"));
+        printf(color_red("Can not allocate memory.\n"));
 
         return EXIT_FAILURE;
     }
@@ -63,7 +63,7 @@ size_t fread_data(FILE *file, int *arr, const size_t height, const size_t width)
     assert(arr != NULL);
     if(file == NULL)
     {
-        printf(color_red("can not open file.\n"));
+        printf(color_red("Can not open file.\n"));
 
         return 0;
     }
@@ -78,7 +78,7 @@ size_t fread_data(FILE *file, int *arr, const size_t height, const size_t width)
     return height;
 }
 
-const int *data_elem(const int *arr, const size_t height, const size_t width, const size_t y, const size_t x)
+int *data_elem(int *arr, const size_t height, const size_t width, const size_t y, const size_t x)
 {
     assert(arr != NULL);
     assert(x < width && y < height);

@@ -69,7 +69,7 @@ size_t fread_text(FILE *file, char *text[], const size_t max_str_len, const size
     assert(text != NULL);
     if(file == NULL)
     {
-        printf(color_red("can not open file.\n"));
+        printf(color_red("Can not open file.\n"));
 
         return 0;
     }
@@ -77,7 +77,7 @@ size_t fread_text(FILE *file, char *text[], const size_t max_str_len, const size
     char *buffer = (char *)calloc(max_str_len, sizeof(char));;
     if(buffer == NULL)
     {
-        printf(color_red("No memory?\n"));
+        printf(color_red("Can not allocate memory.\n"));
 
         return 0;
     }
@@ -92,7 +92,7 @@ size_t fread_text(FILE *file, char *text[], const size_t max_str_len, const size
         char *text_str = (char *)calloc(strlen(buffer) + 1, sizeof(char));
         if(text_str == NULL)
         {
-            printf(color_red("No memory?\n"));
+            printf(color_red("Can not allocate memory.\n"));
 
             break;
         }

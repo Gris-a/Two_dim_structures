@@ -2,7 +2,7 @@
 #include <stdio.h>
 
 //real two dimensional array
-//TODO from file
+
 void print_data(const int* arr, const size_t height, const size_t width);
 const int *data_elem(const int *arr, const size_t height, const size_t width, const size_t y, const size_t x);
 

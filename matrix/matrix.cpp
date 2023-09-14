@@ -6,15 +6,18 @@
 
 #include "../colors.h"
 
-//TODO return actual size of matrix
-
-int *matrix_elem(struct Matrix *matrix, const size_t x, const size_t y)
+int *get_matrix_elem(struct Matrix *matrix, const size_t x, const size_t y)
 {
     assert(matrix         != NULL);
     assert(matrix->matrix != NULL);
     assert(matrix->width > x && matrix->height > y);
 
     return matrix->matrix + x * matrix->width + y;
+}
+
+void set_matrix_elem(struct Matrix *matrix, const size_t x, const size_t y, int elem)
+{
+    *get_matrix_elem(matrix, x, y) = elem;
 }
 
 void print_matrix(struct Matrix *matrix)
@@ -26,20 +29,21 @@ void print_matrix(struct Matrix *matrix)
     {
         for(size_t j = 0; j < matrix->width; j++)
         {
-            printf("[%zu, %zu]"color_red("%d\t"), i, j, *matrix_elem(matrix, i, j));
+            printf("[%zu, %zu]"color_red("%d\t"), i, j, *get_matrix_elem(matrix, i, j));
         }
         printf("\n"
                "\n");
     }
 }
 
+//TODO return actual size of matrix
 void fget_matrix(struct Matrix *matrix, FILE *file)
 {
     assert(matrix         != NULL);
     assert(matrix->matrix != NULL);
     if(file == NULL)
     {
-        printf(color_red("can not open file.\n"));
+        printf(color_red("Can not open file.\n"));
 
         return;
     }
@@ -48,7 +52,7 @@ void fget_matrix(struct Matrix *matrix, FILE *file)
     {
         for(size_t j = 0; j < matrix->width; j++)
         {
-            fscanf(file, "%d", matrix_elem(matrix, i, j));
+            fscanf(file, "%d", get_matrix_elem(matrix, i, j));
         }
     }
 }

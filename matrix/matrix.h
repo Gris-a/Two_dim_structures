@@ -7,12 +7,13 @@ struct Matrix
 {
     size_t width;
     size_t height;
-    int *matrix;
+    int   *matrix;
 };
 
-void print_matrix(struct Matrix *matrix);
+int *get_matrix_elem(struct Matrix *matrix, const size_t x, const size_t y);
+void set_matrix_elem(struct Matrix *matrix, const size_t x, const size_t y, int elem);
 
-int *matrix_elem(struct Matrix *matrix, const size_t x, const size_t y);
+void print_matrix(struct Matrix *matrix);
 
 void fget_matrix(struct Matrix *matrix, FILE *file);
 

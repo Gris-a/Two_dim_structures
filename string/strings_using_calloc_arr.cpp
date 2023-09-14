@@ -22,7 +22,7 @@ int main(void)
     FILE *file = fopen("input.txt", "r");
     if(file == NULL)
     {
-        printf(color_red("can not open file.\n"));
+        printf(color_red("Can not open file.\n"));
 
         return EXIT_FAILURE;
     }
@@ -30,7 +30,7 @@ int main(void)
     char *arr = generate_text(file, &str_len_max, &str_n_max);
     if(arr == NULL)
     {
-        printf(color_red("No memory?\n"));
+        printf(color_red("Can not allocate memory.\n"));
 
         return EXIT_FAILURE;
     }
@@ -51,7 +51,7 @@ char *generate_text(FILE *file, size_t *str_len_max, size_t *str_n_max)
     assert(str_n_max   != NULL);
     if(file == NULL)
     {
-        printf(color_red("can not open file.\n"));
+        printf(color_red("Can not open file.\n"));
 
         return NULL;
     }
@@ -67,7 +67,7 @@ size_t fread_data(FILE *file, char *data, const size_t str_len_max, const size_t
     assert(data != NULL);
     if(file == NULL)
     {
-        printf(color_red("can not open file.\n"));
+        printf(color_red("Can not open file.\n"));
 
         return 0;
     }
@@ -75,7 +75,7 @@ size_t fread_data(FILE *file, char *data, const size_t str_len_max, const size_t
     char *buffer = (char *)calloc(str_len_max, sizeof(char));
     if(buffer == NULL)
     {
-        printf(color_red("No memory?\n"));
+        printf(color_red("Can not allocate memory.\n"));
         return 0;
     }
 

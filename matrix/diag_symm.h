@@ -9,12 +9,13 @@ struct D_symm
     int *data;
 };
 
-void print_d_symm(struct D_symm *d_symm);
+int *get_elem(struct D_symm *d_symm, size_t x, size_t y);
+void set_elem(struct D_symm *d_symm, const size_t x, const size_t y, const int elem);
 
-int *d_symm_elem(struct D_symm *d_symm, const size_t x, const size_t y);
+void print_diag_symm(struct D_symm *d_symm);
 
-void fget_d_symm(struct D_symm *d_symm, FILE *file);
+void fget_diag_symm(struct D_symm *d_symm, FILE *file);
 
-int *make_d_symm(const size_t size); //CALLS CALLOC, DON`T FORGET TO FREE MEMORY
+int *make_diag_symm(const size_t size); //CALLS CALLOC, DON`T FORGET TO FREE MEMORY
 
 #endif //D_SYMMETRIC_DATA_H

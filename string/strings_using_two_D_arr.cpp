@@ -20,7 +20,7 @@ int main(void)
     FILE *file = fopen("input.txt", "r");
     if(file == NULL)
     {
-        printf(color_red("can not open file.\n"));
+        printf(color_red("Can not open file.\n"));
 
         return EXIT_FAILURE;
     }
@@ -41,7 +41,7 @@ size_t fread_text(FILE *file, char *text)
     assert(text != NULL);
     if(file == NULL)
     {
-        printf(color_red("can not open file.\n"));
+        printf(color_red("Can not open file.\n"));
 
         return 0;
     }
